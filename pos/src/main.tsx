@@ -1,27 +1,45 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
-import { BrowserRouter, Route, Routes } from "react-router";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router";
 import BillingPage from "./pages/BillingPage";
 import InventoryPage from "./pages/InventoryPage";
+import SuppliersPage from "./pages/SuppliersPage";
+import EmployeesPage from "./pages/EmployeesPage";
+import ReportPage from "./pages/ReportPage";
+import FederalComplientReportingPage from "./pages/FederalComplientReportingPage";
+import BackupDataPage from "./pages/BackupDataPage";
+import NavBar from "./components/NavBar";
+import "./App.css";
 
+function MainApp() {
+  const location = useLocation();
+  const showNavBar = location.pathname !== "/";
+
+  return (
+    <>
+      {showNavBar && <NavBar />}
+      <Routes>
+        <Route path="/" element={<App />} />
+        <Route path="/billing" element={<BillingPage />} />
+        <Route path="/inventory" element={<InventoryPage />} />
+        <Route path="/suppliers" element={<SuppliersPage />} />
+        <Route path="/employees" element={<EmployeesPage />} />
+        <Route path="/report" element={<ReportPage />} />
+        <Route
+          path="/federal-complient-reporting"
+          element={<FederalComplientReportingPage />}
+        />
+        <Route path="/backup-data" element={<BackupDataPage />} />
+      </Routes>
+    </>
+  );
+}
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/billing" element={<BillingPage />}></Route>
-        <Route path="/inventory" element={<InventoryPage />}></Route>
-        <Route path="/suppliers" element={<BillingPage />}></Route>
-        <Route path="/employees" element={<BillingPage />}></Route>
-        <Route path="/report" element={<BillingPage />}></Route>
-        <Route
-          path="/federal-complient-reporting"
-          element={<BillingPage />}
-        ></Route>
-        <Route path="/backup-data" element={<BillingPage />}></Route>
-      </Routes>
+      <MainApp />
     </BrowserRouter>
   </React.StrictMode>,
 );
